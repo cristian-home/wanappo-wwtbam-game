@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+/*
+  Any global styles that are not achievable with Tailwind classes directly
+  or utility API can be added here. For this project, most global styles
+  like background and font are handled in App.vue via Tailwind classes.
+*/
+
+/* You can add more global styles or component-specific styles below */
