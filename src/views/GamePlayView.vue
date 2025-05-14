@@ -15,13 +15,13 @@
             :disabled="!gameStore.selectedAnswerId || gameStore.isCorrect !== null"
             class="py-2.5 px-5 text-base bg-cyan-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
           >
-            Confirm Answer
+            {{ $t('confirmAnswer') }}
           </button>
           <button
             @click="resetAndStartGame"
             class="py-2.5 px-5 text-base bg-teal-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-teal-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
           >
-            New Game
+            {{ $t('newGame') }}
           </button>
         </div>
 
@@ -29,24 +29,24 @@
           v-if="gameStore.gameStatus === 'gameOver'"
           class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
         >
-          <h2 class="text-red-500 text-2xl font-bold">Game Over!</h2>
-          <p class="text-lg">Your final score: ${{ gameStore.score.toLocaleString() }}</p>
+          <h2 class="text-red-500 text-2xl font-bold">{{ $t('gameOver') }}</h2>
+          <p class="text-lg">{{ $t('yourFinalScore') }} ${{ gameStore.score.toLocaleString() }}</p>
           <RouterLink
             to="/"
             class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
-            >Back to Home</RouterLink
+            >{{ $t('backToHome') }}</RouterLink
           >
         </div>
         <div
           v-if="gameStore.gameStatus === 'finished'"
           class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
         >
-          <h2 class="text-green-500 text-2xl font-bold">Congratulations! You are a Millionaire!</h2>
-          <p class="text-lg">You won: ${{ gameStore.score.toLocaleString() }}</p>
+          <h2 class="text-green-500 text-2xl font-bold">{{ $t('congratulations') }}</h2>
+          <p class="text-lg">{{ $t('youWon') }} ${{ gameStore.score.toLocaleString() }}</p>
           <RouterLink
             to="/"
             class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
-            >Back to Home</RouterLink
+            >{{ $t('backToHome') }}</RouterLink
           >
         </div>
       </div>

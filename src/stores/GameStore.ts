@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useQuestionStore, type Question } from './QuestionStore'
+import i18n from '@/i18n'
 
 export interface Lifeline {
   id: string
@@ -104,17 +105,20 @@ export const useGameStore = defineStore('game', {
       const lifeline = this.lifelines.find((l) => l.id === lifelineId)
       if (lifeline && lifeline.available) {
         lifeline.available = false
-        this.lifelineFeedback = `Used ${lifeline.name}.`
+
+        // Use the imported i18n instance to get translations
+        this.lifelineFeedback = i18n.global.t('used', [lifeline.name])
+
         // Specific lifeline logic (e.g., for 50-50) will be handled by components reacting to this or by more detailed state.
         if (lifelineId === '50-50' && this.currentQuestion) {
           // The component AnswerButtons.vue will handle the visual effect of 50:50
-          this.lifelineFeedback += ' Two incorrect options will be removed.'
+          this.lifelineFeedback += ' ' + i18n.global.t('incorrectRemoved')
         } else if (lifelineId === 'ask-audience') {
           // Simulate audience poll - for now, just a message
-          this.lifelineFeedback += ' The audience is thinking... (Not implemented yet)'
+          this.lifelineFeedback += ' ' + i18n.global.t('audienceThinking')
         }
       } else {
-        this.lifelineFeedback = `Lifeline ${lifelineId} not available or already used.`
+        this.lifelineFeedback = i18n.global.t('lifelineNotAvailable', [lifelineId])
       }
     },
     resetGame() {

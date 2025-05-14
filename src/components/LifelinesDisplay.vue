@@ -1,6 +1,6 @@
 <template>
   <div class="mb-5 text-center">
-    <h4 class="mt-0 mb-2.5 text-white text-lg font-semibold">Lifelines</h4>
+    <h4 class="mt-0 mb-2.5 text-white text-lg font-semibold">{{ $t('lifelines') }}</h4>
     <div class="flex justify-center gap-2.5">
       <button
         v-for="lifeline in lifelines"
@@ -14,31 +14,26 @@
         class="py-2.5 px-4 bg-gray-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
         :class="{ 'line-through bg-gray-700': !lifeline.available }"
       >
-        {{ lifeline.name }}
+        {{
+          lifeline.id === '50-50'
+            ? $t('fiftyFifty')
+            : lifeline.id === 'ask-audience'
+              ? $t('askAudience')
+              : lifeline.name
+        }}
       </button>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 import { useGameStore, type Lifeline } from '@/stores/GameStore'
 
-export default defineComponent({
-  name: 'LifelinesDisplay',
-  setup() {
-    const gameStore = useGameStore()
-    const lifelines = computed(() => gameStore.lifelines as Lifeline[])
+const gameStore = useGameStore()
+const lifelines = computed(() => gameStore.lifelines as Lifeline[])
 
-    const useLifeline = (lifelineId: string) => {
-      gameStore.useLifeline(lifelineId)
-    }
-
-    return {
-      lifelines,
-      useLifeline,
-      gameStore, // to disable buttons based on game state
-    }
-  },
-})
+const useLifeline = (lifelineId: string) => {
+  gameStore.useLifeline(lifelineId)
+}
 </script>

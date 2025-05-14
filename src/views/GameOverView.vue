@@ -1,22 +1,22 @@
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen text-center p-5 box-border">
     <GameLogo />
-    <h1 class="text-red-500 text-4xl font-bold mb-5">Game Over</h1>
+    <h1 class="text-red-500 text-4xl font-bold mb-5">{{ $t('gameOver') }}</h1>
     <p v-if="finalScore !== null" class="text-xl mb-7">
-      Your final score: ${{ finalScore.toLocaleString() }}
+      {{ $t('yourFinalScore') }} ${{ finalScore.toLocaleString() }}
     </p>
-    <p v-else class="text-xl mb-7">Thank you for playing!</p>
+    <p v-else class="text-xl mb-7">{{ $t('thankYouForPlaying') }}</p>
 
     <div class="flex gap-4">
       <RouterLink
         to="/game"
         class="py-2.5 px-5 bg-blue-600 text-white no-underline rounded-md text-base transition-colors hover:bg-blue-700"
-        >Play Again</RouterLink
+        >{{ $t('playAgain') }}</RouterLink
       >
       <RouterLink
         to="/"
         class="py-2.5 px-5 bg-blue-600 text-white no-underline rounded-md text-base transition-colors hover:bg-blue-700"
-        >Back to Home</RouterLink
+        >{{ $t('backToHome') }}</RouterLink
       >
     </div>
   </div>

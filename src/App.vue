@@ -9,17 +9,17 @@
         <RouterLink
           to="/"
           class="inline-block px-4 border-l border-gray-600 text-yellow-400 hover:text-yellow-300 first:border-l-0"
-          >Home</RouterLink
+          >{{ $t('home') }}</RouterLink
         >
         <RouterLink
           to="/game"
           class="inline-block px-4 border-l border-gray-600 text-yellow-400 hover:text-yellow-300"
-          >Play Game</RouterLink
+          >{{ $t('playGame') }}</RouterLink
         >
         <RouterLink
           to="/gameover"
           class="inline-block px-4 border-l border-gray-600 text-yellow-400 hover:text-yellow-300"
-          >Game Over (Test)</RouterLink
+          >{{ $t('gameOverTest') }}</RouterLink
         >
       </nav>
     </header>
@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import GameLogo from '@/components/GameLogo.vue' // Corrected import name
+import GameLogo from '@/components/GameLogo.vue'
 import { computed } from 'vue'
 
 const route = useRoute()

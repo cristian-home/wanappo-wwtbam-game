@@ -1,6 +1,6 @@
 <template>
   <div class="text-xl font-bold text-yellow-400 text-center mb-4">
-    <p>Time Left: {{ formattedTimeLeft }}</p>
+    <p>{{ $t('timeLeft') }} {{ formattedTimeLeft }}</p>
   </div>
 </template>
 
