@@ -30,24 +30,30 @@
           class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
         >
           <h2 class="text-red-500 text-2xl font-bold">{{ $t('gameOver') }}</h2>
-          <p class="text-lg">{{ $t('yourFinalScore') }} ${{ gameStore.score.toLocaleString() }}</p>
+          <p class="text-lg">
+            {{ $t('yourFinalScore') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
+          </p>
           <RouterLink
             to="/"
             class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
-            >{{ $t('backToHome') }}</RouterLink
           >
+            {{ $t('backToHome') }}
+          </RouterLink>
         </div>
         <div
           v-if="gameStore.gameStatus === 'finished'"
           class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
         >
           <h2 class="text-green-500 text-2xl font-bold">{{ $t('congratulations') }}</h2>
-          <p class="text-lg">{{ $t('youWon') }} ${{ gameStore.score.toLocaleString() }}</p>
+          <p class="text-lg">
+            {{ $t('youWon') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
+          </p>
           <RouterLink
             to="/"
             class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
-            >{{ $t('backToHome') }}</RouterLink
           >
+            {{ $t('backToHome') }}
+          </RouterLink>
         </div>
       </div>
       <div class="md:w-1/4 md:max-w-xs bg-black bg-opacity-30 p-4 rounded-lg">

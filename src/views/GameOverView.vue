@@ -3,7 +3,7 @@
     <GameLogo />
     <h1 class="text-red-500 text-4xl font-bold mb-5">{{ $t('gameOver') }}</h1>
     <p v-if="finalScore !== null" class="text-xl mb-7">
-      {{ $t('yourFinalScore') }} ${{ finalScore.toLocaleString() }}
+      {{ $t('yourFinalScore') }} {{ finalScore.toLocaleString() }} {{ $t('points') }}
     </p>
     <p v-else class="text-xl mb-7">{{ $t('thankYouForPlaying') }}</p>
 

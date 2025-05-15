@@ -7,7 +7,7 @@ const messages = {
     // Add more English translations here
     timeLeft: 'Time Left:',
     loadingQuestion: 'Loading question...',
-    moneyLadder: 'Money Ladder',
+    moneyLadder: 'Prize Ladder',
     lifelines: 'Lifelines',
     gameLogoAlt: 'Game Logo',
     home: 'Home',
@@ -35,13 +35,14 @@ const messages = {
     lifelineNotAvailable: 'Lifeline {0} not available or already used for this game.',
     lifelineUsageReminder:
       'Remember: used lifelines remain unavailable for all subsequent questions.',
+    points: 'Points',
   },
   es: {
     greeting: '¡Hola!',
     // Add more Spanish translations here
     timeLeft: 'Tiempo Restante:',
     loadingQuestion: 'Cargando pregunta...',
-    moneyLadder: 'Escalera de Dinero',
+    moneyLadder: 'Escalera de Premios',
     lifelines: 'Comodines',
     gameLogoAlt: 'Logo del Juego',
     home: 'Inicio',
@@ -69,6 +70,7 @@ const messages = {
     lifelineNotAvailable: 'El comodín {0} no está disponible o ya fue usado para este juego.',
     lifelineUsageReminder:
       'Recuerda: los comodines usados permanecerán no disponibles para todas las siguientes preguntas.',
+    points: 'Puntos',
   },
 }
 
