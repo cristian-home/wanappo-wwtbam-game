@@ -44,6 +44,7 @@ export const useGameStore = defineStore('game', {
     ] as MoneyLadderItem[],
     currentPrizeLevel: 0, // Represents the number of correctly answered questions
     lifelineFeedback: '',
+    fiftyFiftyActiveForCurrentQuestion: false, // Track if 50:50 is active for current question only
   }),
   actions: {
     startGame() {
@@ -60,6 +61,7 @@ export const useGameStore = defineStore('game', {
         this.selectedAnswerId = null
         this.isCorrect = null
         this.lifelines.forEach((l) => (l.available = true))
+        this.fiftyFiftyActiveForCurrentQuestion = false
         this.lifelineFeedback = ''
       } else {
         console.error('No questions available to start the game.')
@@ -96,6 +98,9 @@ export const useGameStore = defineStore('game', {
         this.selectedAnswerId = null
         this.isCorrect = null
         this.lifelineFeedback = ''
+        // Reset the 50:50 flag for the new question
+        this.fiftyFiftyActiveForCurrentQuestion = false
+        // Note: We don't reset lifelines.available here - they stay used for all subsequent questions
       } else {
         this.gameStatus = 'finished' // All questions answered or max prize reached
       }
@@ -104,6 +109,8 @@ export const useGameStore = defineStore('game', {
       if (this.gameStatus !== 'playing') return
       const lifeline = this.lifelines.find((l) => l.id === lifelineId)
       if (lifeline && lifeline.available) {
+        // Mark the lifeline as used - once a lifeline is used, it remains unavailable
+        // for the entire game, across all subsequent questions
         lifeline.available = false
 
         // Use the imported i18n instance to get translations
@@ -111,6 +118,8 @@ export const useGameStore = defineStore('game', {
 
         // Specific lifeline logic (e.g., for 50-50) will be handled by components reacting to this or by more detailed state.
         if (lifelineId === '50-50' && this.currentQuestion) {
+          // Set the flag to indicate 50:50 is active for this question only
+          this.fiftyFiftyActiveForCurrentQuestion = true
           // The component AnswerButtons.vue will handle the visual effect of 50:50
           this.lifelineFeedback += ' ' + i18n.global.t('incorrectRemoved')
         } else if (lifelineId === 'ask-audience') {
@@ -130,6 +139,7 @@ export const useGameStore = defineStore('game', {
       this.score = 0
       this.currentPrizeLevel = 0
       this.gameStatus = 'pending'
+      this.fiftyFiftyActiveForCurrentQuestion = false
       this.lifelineFeedback = ''
       const questionStore = useQuestionStore()
       questionStore.fetchSampleQuestions() // Reload sample questions
