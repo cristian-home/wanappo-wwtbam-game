@@ -1,12 +1,16 @@
 <script setup lang="ts">
-// No need to import useI18n since we're using the global $t function
+import { RouterLink } from 'vue-router'
+import GameLogo from '../components/GameLogo.vue'
 </script>
 
 <template>
-  <main>
-    <h1>{{ $t('welcomeToYourApp') }}</h1>
-    <h3>
-      {{ $t('projectCreatedWith', ['Vite', 'Vue 3']) }}
-    </h3>
+  <main class="w-full flex-grow flex flex-col items-center justify-center">
+    <GameLogo class="w-80 h-80" />
+    <RouterLink
+      to="/game"
+      class="inline-block px-4 border-l border-gray-600 text-yellow-400 hover:text-yellow-300"
+    >
+      {{ $t('playGame') }}
+    </RouterLink>
   </main>
 </template>

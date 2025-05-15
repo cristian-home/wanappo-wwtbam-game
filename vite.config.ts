@@ -7,6 +7,7 @@ import nightwatchPlugin from 'vite-plugin-nightwatch'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import { compression } from 'vite-plugin-compression2'
+import Icons from 'unplugin-icons/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,6 +17,10 @@ export default defineConfig({
     vueDevTools(),
     tailwindcss(),
     nightwatchPlugin(),
+    Icons({
+      autoInstall: true,
+      compiler: 'vue3',
+    }),
     VitePWA({ registerType: 'autoUpdate' }),
     compression({ algorithm: 'deflate' }),
     compression({ algorithm: 'gzip' }),

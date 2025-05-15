@@ -1,9 +1,9 @@
 <template>
   <div
     id="app"
-    class="bg-gradient-to-br from-purple-900 via-purple-700 to-pink-700 text-gray-100 min-h-screen flex flex-col font-sans"
+    class="w-full h-dvh bg-gradient-to-br from-purple-900 via-purple-700 to-pink-700 text-gray-100 min-h-screen flex flex-col font-sans"
   >
-    <header v-if="!isGameRoute" class="leading-normal max-h-screen p-4 border-b border-gray-700">
+    <!-- <header v-if="!isGameRoute" class="leading-normal max-h-screen p-4 border-b border-gray-700">
       <GameLogo />
       <nav class="w-full text-xs text-center mt-4">
         <RouterLink
@@ -22,17 +22,11 @@
           >{{ $t('gameOverTest') }}</RouterLink
         >
       </nav>
-    </header>
+    </header> -->
     <RouterView class="flex-grow flex flex-col" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView, useRoute } from 'vue-router'
-import GameLogo from '@/components/GameLogo.vue'
-import { computed } from 'vue'
-
-const route = useRoute()
-// Ensure game routes are correctly identified if more specific paths are needed
-const isGameRoute = computed(() => route.path.startsWith('/game'))
+import { RouterView } from 'vue-router'
 </script>

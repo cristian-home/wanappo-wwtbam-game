@@ -21,7 +21,7 @@ export const useGameStore = defineStore('game', {
     isCorrect: null as boolean | null,
     lifelines: [
       { id: '50-50', name: '50:50', available: true },
-      { id: 'ask-audience', name: 'Ask the Audience', available: true },
+      // { id: 'ask-audience', name: 'Ask the Audience', available: true },
     ] as Lifeline[],
     score: 0,
     gameStatus: 'pending' as 'pending' | 'playing' | 'paused' | 'finished' | 'gameOver',
