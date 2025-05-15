@@ -8,7 +8,7 @@ const currentQuestion = computed(() => gameStore.getCurrentQuestionData)
 
 <template>
   <div
-    class="display-question p-5 mb-5 bg-black bg-opacity-50 text-white rounded-lg text-center text-2xl min-h-[100px] flex items-center justify-center"
+    class="display-question p-5 px-12 md:px-16 mb-5 bg-black bg-opacity-50 text-white rounded-lg text-center text-2xl min-h-[100px] flex items-center justify-center"
   >
     <p v-if="currentQuestion">{{ currentQuestion.text }}</p>
     <p v-else>{{ $t('loadingQuestion') }}</p>
@@ -22,8 +22,6 @@ const currentQuestion = computed(() => gameStore.getCurrentQuestionData)
   color: #fff;
   font-weight: 500;
   text-decoration: none;
-  text-transform: uppercase;
-  padding: 15px 50px;
   text-align: center;
   clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
   background-color: #161213;

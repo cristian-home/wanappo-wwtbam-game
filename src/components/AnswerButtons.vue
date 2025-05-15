@@ -85,7 +85,7 @@ watch(currentQuestion, () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-2.5 mb-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 mb-5">
     <button
       v-for="option in visibleOptions"
       :key="option.id"
@@ -95,7 +95,7 @@ watch(currentQuestion, () => {
       :class="getButtonClass(option.id)"
     >
       <span class="w-full h-full flex flex-col justify-center">
-        {{ option.text }}
+        {{ option.text }} {{ option.id == currentQuestion?.correctAnswerId ? ' (Correct)' : '' }}
       </span>
     </button>
   </div>
@@ -120,7 +120,6 @@ watch(currentQuestion, () => {
   color: #fff;
   font-weight: 500;
   text-decoration: none;
-  text-transform: uppercase;
   padding: 15px 50px;
   text-align: center;
   clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
