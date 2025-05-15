@@ -1,22 +1,34 @@
 <script setup lang="ts">
 import { onMounted, watch, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { onBeforeRouteLeave, useRouter } from 'vue-router'
 import GameLogo from '@/components/GameLogo.vue'
 import MoneyLadder from '@/components/MoneyLadder.vue'
 import QuestionTimer from '@/components/QuestionTimer.vue'
 import QuestionDisplay from '@/components/QuestionDisplay.vue'
 import AnswerButtons from '@/components/AnswerButtons.vue'
 import LifelinesDisplay from '@/components/LifelinesDisplay.vue'
-import LifelineFeedback from '@/components/LifelineFeedback.vue'
+// import LifelineFeedback from '@/components/LifelineFeedback.vue'
 import { useGameStore } from '../stores/GameStore'
 import { useTimerStore } from '../stores/TimerStore'
+import QlementineIconsNew16 from '~icons/qlementine-icons/new-16'
+import { useMotion } from '@vueuse/motion'
+import { motions } from '@/motions'
+import { deepMerge } from '@/utils/objects'
 
 const gameStore = useGameStore()
 const timerStore = useTimerStore()
 const router = useRouter()
 
-const isMobile = ref(window.innerWidth < 768) // Simple check for mobile
-window.addEventListener('resize', () => (isMobile.value = window.innerWidth < 768))
+const header = ref<HTMLElement>()
+const questionPanel = ref<HTMLElement>()
+const ladder = ref<HTMLElement>()
+
+const { leave: leaveHeader } = useMotion(header, motions.appear)
+const { leave: leavePanel } = useMotion(
+  questionPanel,
+  deepMerge(motions.appear, { enter: { transition: { delay: 500 } } }),
+)
+const { leave: leaveLadder } = useMotion(ladder, motions.slideLeftIn)
 
 const startGame = () => {
   gameStore.startGame()
@@ -91,73 +103,118 @@ watch(
     }
   },
 )
+
+onBeforeRouteLeave((to, from, next) => {
+  Promise.all([
+    new Promise((resolve) => leaveHeader(() => resolve(true))),
+    new Promise((resolve) => leavePanel(() => resolve(true))),
+    new Promise((resolve) => leaveLadder(() => resolve(true))),
+  ]).then(() => {
+    next()
+  })
+})
 </script>
 
 <template>
-  <div class="p-5 flex flex-col items-center min-h-[calc(100vh-40px)] box-border">
-    <div class="flex w-full max-w-6xl gap-5 md:flex-row flex-col-reverse">
-      <div class="flex-grow md:w-3/4 flex flex-col">
-        <div class="flex justify-center">
-          <GameLogo class="w-32 h-32" v-if="!isMobile" />
-        </div>
-        <QuestionTimer />
-        <QuestionDisplay />
-        <AnswerButtons />
-        <LifelinesDisplay class="absolute" />
-        <LifelineFeedback />
-
-        <div class="flex justify-around mt-5">
-          <button
-            @click="confirmAndProceed"
-            :disabled="!gameStore.selectedAnswerId || gameStore.isCorrect !== null"
-            class="py-2.5 px-5 text-base bg-cyan-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
-          >
-            {{ $t('confirmAnswer') }}
-          </button>
-        </div>
-
-        <div
-          v-if="gameStore.gameStatus === 'gameOver'"
-          class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
+  <div class="main-container h-full w-full p-4 overflow-hidden">
+    <div class="Header flex flex-row gap-4 justify-between" ref="header">
+      <QuestionTimer />
+      <GameLogo class="min-h-1" />
+      <LifelinesDisplay />
+      <!-- <LifelineFeedback /> -->
+    </div>
+    <div class="QuestionPanel" ref="questionPanel">
+      <QuestionDisplay />
+      <AnswerButtons />
+      <button
+        @click="confirmAndProceed"
+        :disabled="!gameStore.selectedAnswerId || gameStore.isCorrect !== null"
+        class="py-2.5 px-5 text-base bg-cyan-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
+      >
+        {{ $t('confirmAnswer') }}
+      </button>
+      <div
+        v-if="gameStore.gameStatus === 'gameOver'"
+        class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
+      >
+        <h2 class="text-red-500 text-2xl font-bold">{{ $t('gameOver') }}</h2>
+        <p class="text-lg">
+          {{ $t('yourFinalScore') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
+        </p>
+        <RouterLink
+          to="/"
+          class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
         >
-          <h2 class="text-red-500 text-2xl font-bold">{{ $t('gameOver') }}</h2>
-          <p class="text-lg">
-            {{ $t('yourFinalScore') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
-          </p>
-          <RouterLink
-            to="/"
-            class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
-          >
-            {{ $t('backToHome') }}
-          </RouterLink>
-        </div>
-        <div
-          v-if="gameStore.gameStatus === 'finished'"
-          class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
-        >
-          <h2 class="text-green-500 text-2xl font-bold">{{ $t('congratulations') }}</h2>
-          <p class="text-lg">
-            {{ $t('youWon') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
-          </p>
-          <RouterLink
-            to="/"
-            class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
-          >
-            {{ $t('backToHome') }}
-          </RouterLink>
-        </div>
+          {{ $t('backToHome') }}
+        </RouterLink>
       </div>
-      <div class="md:w-1/4 md:max-w-xs bg-black bg-opacity-30 p-4 rounded-lg">
-        <MoneyLadder />
-        <div class="w-full mt-5 rounded-lg border-gray-50 flex flex-col items-center">
-          <button
-            @click="resetAndStartGame"
-            class="py-2.5 px-5 text-base bg-teal-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-teal-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
-          >
-            {{ $t('newGame') }}
-          </button>
-        </div>
+      <div
+        v-if="gameStore.gameStatus === 'finished'"
+        class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
+      >
+        <h2 class="text-green-500 text-2xl font-bold">{{ $t('congratulations') }}</h2>
+        <p class="text-lg">
+          {{ $t('youWon') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
+        </p>
+        <RouterLink
+          to="/"
+          class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
+        >
+          {{ $t('backToHome') }}
+        </RouterLink>
+      </div>
+    </div>
+    <div
+      ref="ladder"
+      class="PrizeLadder bg-black bg-opacity-30 rounded-lg flex flex-col items-stretch p-4 gap-4"
+    >
+      <MoneyLadder class="min-h-1" />
+      <div class="w-full rounded-lg border-gray-50 flex flex-col items-stretch">
+        <button
+          @click="resetAndStartGame"
+          class="cursor-pointer flex gap-4 p-4 bg-black border-2 border-gray-900 text-white font-bold text-lg rounded-lg shadow-md hover:bg-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300 ease-in-out items-center justify-center"
+        >
+          <QlementineIconsNew16 />
+          {{ $t('newGame') }}
+        </button>
       </div>
     </div>
   </div>
 </template>
+<style lang="css" scoped>
+.main-container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 8rem 1fr 1fr;
+  grid-auto-flow: row;
+  grid-template-areas:
+    'Header Header Header Header'
+    'QuestionPanel QuestionPanel QuestionPanel PrizeLadder'
+    'QuestionPanel QuestionPanel QuestionPanel PrizeLadder';
+}
+
+/* medaquery using tailwind values */
+@media (min-width: 768px) {
+  .main-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 15rem 1fr 1fr;
+    grid-auto-flow: column;
+    grid-template-areas:
+      'Header Header Header PrizeLadder'
+      'QuestionPanel QuestionPanel QuestionPanel PrizeLadder';
+  }
+}
+
+.PrizeLadder {
+  grid-area: PrizeLadder;
+}
+
+.QuestionPanel {
+  grid-area: QuestionPanel;
+}
+
+.Header {
+  grid-area: Header;
+}
+</style>
