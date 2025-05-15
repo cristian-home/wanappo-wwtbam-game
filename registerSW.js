@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/wanappo-wwtbam-game/sw.js', { scope: '/wanappo-wwtbam-game/' })})}
