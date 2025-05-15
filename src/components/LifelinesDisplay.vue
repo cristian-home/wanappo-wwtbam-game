@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useGameStore, type Lifeline } from '@/stores/GameStore'
+import { useGameStore, type Lifeline } from '../stores/GameStore'
 
 const gameStore = useGameStore()
 const lifelines = computed(() => gameStore.lifelines as Lifeline[])

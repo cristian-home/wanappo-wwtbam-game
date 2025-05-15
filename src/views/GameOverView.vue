@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { useGameStore } from '@/stores/GameStore'
+import { useGameStore } from '../stores/GameStore'
 import GameLogo from '@/components/GameLogo.vue'
 import { RouterLink } from 'vue-router'
 

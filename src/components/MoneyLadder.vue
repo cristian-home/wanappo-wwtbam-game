@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useGameStore, type MoneyLadderItem } from '@/stores/GameStore'
+import { useGameStore, type MoneyLadderItem } from '../stores/GameStore'
 
 const gameStore = useGameStore()
 const moneyLadder = computed(() => gameStore.moneyLadder as MoneyLadderItem[])

@@ -73,8 +73,8 @@ import QuestionDisplay from '@/components/QuestionDisplay.vue'
 import AnswerButtons from '@/components/AnswerButtons.vue'
 import LifelinesDisplay from '@/components/LifelinesDisplay.vue'
 import LifelineFeedback from '@/components/LifelineFeedback.vue'
-import { useGameStore } from '@/stores/GameStore'
-import { useTimerStore } from '@/stores/TimerStore'
+import { useGameStore } from '../stores/GameStore'
+import { useTimerStore } from '../stores/TimerStore'
 
 const gameStore = useGameStore()
 const timerStore = useTimerStore()

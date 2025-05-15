@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useQuestionStore, type Question } from './QuestionStore'
-import i18n from '@/i18n'
+import i18n from '../i18n'
 
 export interface Lifeline {
   id: string

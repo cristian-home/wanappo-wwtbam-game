@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import { computed, watch, onUnmounted } from 'vue'
-import { useTimerStore } from '@/stores/TimerStore'
-import { useGameStore } from '@/stores/GameStore'
+import { useTimerStore } from '../stores/TimerStore'
+import { useGameStore } from '../stores/GameStore'
 
 const timerStore = useTimerStore()
 const gameStore = useGameStore()

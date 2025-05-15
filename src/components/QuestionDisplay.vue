@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useGameStore } from '@/stores/GameStore'
+import { useGameStore } from '../stores/GameStore'
 
 const gameStore = useGameStore()
 const currentQuestion = computed(() => gameStore.getCurrentQuestionData)

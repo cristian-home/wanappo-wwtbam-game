@@ -15,9 +15,9 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useGameStore } from '@/stores/GameStore'
-import { useTimerStore } from '@/stores/TimerStore'
-import type { QuestionOption } from '@/stores/QuestionStore'
+import { useGameStore } from '../stores/GameStore'
+import { useTimerStore } from '../stores/TimerStore'
+import type { QuestionOption } from '../stores/QuestionStore'
 
 const gameStore = useGameStore()
 const timerStore = useTimerStore()
