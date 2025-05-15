@@ -12,7 +12,8 @@
           gameStore.gameStatus !== 'playing'
         "
         class="py-2.5 px-4 bg-gray-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
-        :class="{ 'line-through bg-gray-700': !lifeline.available }"
+        :class="{ 'line-through bg-gray-700 text-gray-400': !lifeline.available }"
+        :title="lifeline.available ? '' : $t('lifelineNotAvailable', [lifeline.id])"
       >
         {{
           lifeline.id === '50-50'
@@ -23,6 +24,9 @@
         }}
       </button>
     </div>
+    <div v-if="anyLifelineUsed" class="text-xs text-yellow-400 mt-2">
+      {{ $t('lifelineUsageReminder') }}
+    </div>
   </div>
 </template>
 
@@ -32,6 +36,7 @@ import { useGameStore, type Lifeline } from '@/stores/GameStore'
 
 const gameStore = useGameStore()
 const lifelines = computed(() => gameStore.lifelines as Lifeline[])
+const anyLifelineUsed = computed(() => gameStore.lifelines.some((lifeline) => !lifeline.available))
 
 const useLifeline = (lifelineId: string) => {
   gameStore.useLifeline(lifelineId)

@@ -34,8 +34,7 @@ export default defineComponent({
     const isAnswerSelected = computed(() => selectedAnswerId.value !== null)
 
     const fiftyFiftyActive = computed(() => {
-      const fiftyFifty = gameStore.lifelines.find((l) => l.id === '50-50')
-      return fiftyFifty && !fiftyFifty.available
+      return gameStore.fiftyFiftyActiveForCurrentQuestion
     })
 
     const visibleOptions = computed(() => {

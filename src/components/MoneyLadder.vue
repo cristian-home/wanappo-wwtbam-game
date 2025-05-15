@@ -13,7 +13,7 @@
           'text-gray-300': item.level > currentGameLevel,
         }"
       >
-        {{ item.level }}: ${{ item.amount.toLocaleString() }}
+        {{ item.level }}: {{ item.amount.toLocaleString() }} {{ $t('points') }}
       </li>
     </ul>
   </div>
