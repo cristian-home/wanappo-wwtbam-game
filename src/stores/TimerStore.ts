@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 
+type TimeOut = ReturnType<typeof setTimeout>
+
 export const useTimerStore = defineStore('timer', {
   state: () => ({
     timeLeft: 120, // Default time per question
     isRunning: false,
-    intervalId: null as null | number,
+    intervalId: null as TimeOut | null | number,
   }),
   actions: {
     startTimer(duration: number = 120) {

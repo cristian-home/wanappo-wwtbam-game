@@ -7,19 +7,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useGameStore } from '@/stores/GameStore'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGameStore } from '../stores/GameStore'
 
-export default defineComponent({
-  name: 'LifelineFeedback',
-  setup() {
-    const gameStore = useGameStore()
-    const feedbackMessage = computed(() => gameStore.lifelineFeedback)
-
-    return {
-      feedbackMessage,
-    }
-  },
-})
+const gameStore = useGameStore()
+const feedbackMessage = computed(() => gameStore.lifelineFeedback)
 </script>

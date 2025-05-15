@@ -22,34 +22,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue'
-import { useGameStore } from '@/stores/GameStore'
+<script setup lang="ts">
+import { computed, onMounted } from 'vue'
+import { useGameStore } from '../stores/GameStore'
 import GameLogo from '@/components/GameLogo.vue'
 import { RouterLink } from 'vue-router'
 
-export default defineComponent({
-  name: 'GameOverView',
-  components: {
-    GameLogo,
-    RouterLink,
-  },
-  setup() {
-    const gameStore = useGameStore()
-    const finalScore = computed(() => gameStore.score)
+const gameStore = useGameStore()
+const finalScore = computed(() => gameStore.score)
 
-    onMounted(() => {
-      // Ensure game state is properly set to gameOver if not already
-      // This view might be navigated to directly or from game logic
-      if (gameStore.gameStatus !== 'gameOver' && gameStore.gameStatus !== 'finished') {
-        // If the game didn't naturally end, we can set a default or redirect
-        // For now, we just display the score if available
-      }
-    })
-
-    return {
-      finalScore,
-    }
-  },
+onMounted(() => {
+  // Ensure game state is properly set to gameOver if not already
+  // This view might be navigated to directly or from game logic
+  if (gameStore.gameStatus !== 'gameOver' && gameStore.gameStatus !== 'finished') {
+    // If the game didn't naturally end, we can set a default or redirect
+    // For now, we just display the score if available
+  }
 })
 </script>

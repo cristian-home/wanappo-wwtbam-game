@@ -5,10 +5,25 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import nightwatchPlugin from 'vite-plugin-nightwatch'
 import tailwindcss from '@tailwindcss/vite'
+import { VitePWA } from 'vite-plugin-pwa'
+import { compression } from 'vite-plugin-compression2'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueDevTools(), tailwindcss(), nightwatchPlugin()],
+  base: '/wanappo-wwtbam-game/',
+  plugins: [
+    vue(),
+    vueDevTools(),
+    tailwindcss(),
+    nightwatchPlugin(),
+    VitePWA({ registerType: 'autoUpdate' }),
+    compression({ algorithm: 'deflate' }),
+    compression({ algorithm: 'gzip' }),
+    compression({
+      algorithm: 'brotliCompress',
+      deleteOriginalAssets: false,
+    }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

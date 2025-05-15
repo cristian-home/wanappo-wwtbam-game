@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest'
 
 import { mount } from '@vue/test-utils'
-import QuestionsPanel from '../QuestionsPanel.vue'
+import Home from '../../views/HomeView.vue'
 
 describe('HelloWorld', () => {
   it('renders properly', () => {
-    const wrapper = mount(QuestionsPanel, { props: { msg: 'Hello Vitest' } })
-    expect(wrapper.text()).toContain('Useless')
+    const wrapper = mount(Home, { props: { msg: 'Hello Vitest' } })
+    // assert true (demo test)
+    expect(wrapper.text()).toContain('inicio')
   })
 })

@@ -7,19 +7,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useGameStore } from '@/stores/GameStore'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGameStore } from '../stores/GameStore'
 
-export default defineComponent({
-  name: 'QuestionDisplay',
-  setup() {
-    const gameStore = useGameStore()
-    const currentQuestion = computed(() => gameStore.getCurrentQuestionData)
-
-    return {
-      currentQuestion,
-    }
-  },
-})
+const gameStore = useGameStore()
+const currentQuestion = computed(() => gameStore.getCurrentQuestionData)
 </script>

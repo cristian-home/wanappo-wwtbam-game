@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import questionsData from '@/data/questions.json'
+import questionsData from '../data/questions.json'
 
 export interface QuestionOption {
   id: string

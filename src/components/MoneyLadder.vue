@@ -19,21 +19,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useGameStore, type MoneyLadderItem } from '@/stores/GameStore'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGameStore, type MoneyLadderItem } from '../stores/GameStore'
 
-export default defineComponent({
-  name: 'MoneyLadder',
-  setup() {
-    const gameStore = useGameStore()
-    const moneyLadder = computed(() => gameStore.moneyLadder as MoneyLadderItem[])
-    const currentGameLevel = computed(() => gameStore.currentPrizeLevel + 1) // +1 because prizeLevel is 0-indexed for correctly answered
-
-    return {
-      moneyLadder,
-      currentGameLevel,
-    }
-  },
-})
+const gameStore = useGameStore()
+const moneyLadder = computed(() => gameStore.moneyLadder as MoneyLadderItem[])
+const currentGameLevel = computed(() => gameStore.currentPrizeLevel + 1) // +1 because prizeLevel is 0-indexed for correctly answered
 </script>
