@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useQuestionStore, type Question } from './QuestionStore'
 import i18n from '../i18n'
+import { useEventBus } from '@vueuse/core'
 
 export interface Lifeline {
   id: string
@@ -12,6 +13,8 @@ export interface MoneyLadderItem {
   level: number
   amount: number
 }
+
+const bus = useEventBus<string>('sounds')
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -48,6 +51,7 @@ export const useGameStore = defineStore('game', {
   }),
   actions: {
     startGame() {
+      bus.emit('playBackground')
       const questionStore = useQuestionStore()
       if (questionStore.questions.length === 0) {
         questionStore.fetchSampleQuestions()

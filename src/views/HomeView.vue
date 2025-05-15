@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import GameLogo from '../components/GameLogo.vue'
-import { useEventBus } from '@vueuse/core'
-
-const bus = useEventBus<string>('sounds')
 
 const router = useRouter()
 
 const playNewGame = () => {
-  bus.emit('playBackground')
-  bus.emit('stopGameOver')
-  bus.emit('stopGamePlay')
-
   router.push({ name: 'gameplay' })
 }
 </script>
