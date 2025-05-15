@@ -63,8 +63,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, watch, ref } from 'vue'
+<script setup lang="ts">
+import { onMounted, watch, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import GameLogo from '@/components/GameLogo.vue'
 import MoneyLadder from '@/components/MoneyLadder.vue'
@@ -76,105 +76,84 @@ import LifelineFeedback from '@/components/LifelineFeedback.vue'
 import { useGameStore } from '@/stores/GameStore'
 import { useTimerStore } from '@/stores/TimerStore'
 
-export default defineComponent({
-  name: 'GamePlayView',
-  components: {
-    GameLogo,
-    MoneyLadder,
-    QuestionTimer,
-    QuestionDisplay,
-    AnswerButtons,
-    LifelinesDisplay,
-    LifelineFeedback,
-  },
-  setup() {
-    const gameStore = useGameStore()
-    const timerStore = useTimerStore()
-    const router = useRouter()
+const gameStore = useGameStore()
+const timerStore = useTimerStore()
+const router = useRouter()
 
-    const isMobile = ref(window.innerWidth < 768) // Simple check for mobile
-    window.addEventListener('resize', () => (isMobile.value = window.innerWidth < 768))
+const isMobile = ref(window.innerWidth < 768) // Simple check for mobile
+window.addEventListener('resize', () => (isMobile.value = window.innerWidth < 768))
 
-    const startGame = () => {
-      gameStore.startGame()
-      if (gameStore.currentQuestion) {
-        timerStore.startTimer(120) // Initial timer start for the first question
+const startGame = () => {
+  gameStore.startGame()
+  if (gameStore.currentQuestion) {
+    timerStore.startTimer(120) // Initial timer start for the first question
+  }
+}
+
+const confirmAndProceed = async () => {
+  if (!gameStore.selectedAnswerId || gameStore.isCorrect !== null) return
+
+  gameStore.confirmAnswer()
+  timerStore.stopTimer() // Stop timer during confirmation and before next question
+
+  // Wait a bit to show correctness before proceeding
+  await new Promise((resolve) => setTimeout(resolve, 1500))
+
+  if (gameStore.isCorrect) {
+    if (gameStore.gameStatus === 'finished') {
+      // Game finished (e.g., won the million)
+      // Navigation to a finished screen or message handled by template
+    } else {
+      gameStore.nextQuestion()
+      if (gameStore.currentQuestion && gameStore.gameStatus === 'playing') {
+        timerStore.startTimer(120) // Start timer for the new question
       }
     }
+  } else {
+    // Game over, isCorrect is false
+    // Navigation to game over screen or message handled by template
+    router.push('/gameover')
+  }
+}
 
-    const confirmAndProceed = async () => {
-      if (!gameStore.selectedAnswerId || gameStore.isCorrect !== null) return
+const resetAndStartGame = () => {
+  timerStore.resetTimer()
+  gameStore.resetGame()
+  startGame()
+}
 
-      gameStore.confirmAnswer()
-      timerStore.stopTimer() // Stop timer during confirmation and before next question
-
-      // Wait a bit to show correctness before proceeding
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      if (gameStore.isCorrect) {
-        if (gameStore.gameStatus === 'finished') {
-          // Game finished (e.g., won the million)
-          // Navigation to a finished screen or message handled by template
-        } else {
-          gameStore.nextQuestion()
-          if (gameStore.currentQuestion && gameStore.gameStatus === 'playing') {
-            timerStore.startTimer(120) // Start timer for the new question
-          }
-        }
-      } else {
-        // Game over, isCorrect is false
-        // Navigation to game over screen or message handled by template
-        router.push('/gameover')
-      }
-    }
-
-    const resetAndStartGame = () => {
-      timerStore.resetTimer()
-      gameStore.resetGame()
-      startGame()
-    }
-
-    onMounted(() => {
-      if (gameStore.gameStatus !== 'playing' || !gameStore.currentQuestion) {
-        startGame()
-      }
-    })
-
-    watch(
-      () => gameStore.gameStatus,
-      (newStatus) => {
-        if (newStatus === 'gameOver') {
-          timerStore.stopTimer()
-          // Optional: Delay before redirecting to GameOverView
-          // setTimeout(() => router.push('/gameover'), 2000);
-        } else if (newStatus === 'finished') {
-          timerStore.stopTimer()
-          // Optional: Display a success message or navigate
-        }
-      },
-    )
-
-    // Watch for timer running out
-    watch(
-      () => timerStore.timeLeft,
-      (newTime) => {
-        if (newTime === 0 && gameStore.gameStatus === 'playing' && !gameStore.selectedAnswerId) {
-          // Time ran out, player didn't select an answer
-          gameStore.gameStatus = 'gameOver' // Set game to over
-          timerStore.stopTimer()
-          // No answer was selected, so it's effectively a wrong answer or loss
-          // You might want to set score or specific state here
-          router.push('/gameover')
-        }
-      },
-    )
-
-    return {
-      gameStore,
-      confirmAndProceed,
-      resetAndStartGame,
-      isMobile,
-    }
-  },
+onMounted(() => {
+  if (gameStore.gameStatus !== 'playing' || !gameStore.currentQuestion) {
+    startGame()
+  }
 })
+
+watch(
+  () => gameStore.gameStatus,
+  (newStatus) => {
+    if (newStatus === 'gameOver') {
+      timerStore.stopTimer()
+      // Optional: Delay before redirecting to GameOverView
+      // setTimeout(() => router.push('/gameover'), 2000);
+    } else if (newStatus === 'finished') {
+      timerStore.stopTimer()
+      // Optional: Display a success message or navigate
+    }
+  },
+)
+
+// Watch for timer running out
+watch(
+  () => timerStore.timeLeft,
+  (newTime) => {
+    if (newTime === 0 && gameStore.gameStatus === 'playing' && !gameStore.selectedAnswerId) {
+      // Time ran out, player didn't select an answer
+      gameStore.gameStatus = 'gameOver' // Set game to over
+      timerStore.stopTimer()
+      // No answer was selected, so it's effectively a wrong answer or loss
+      // You might want to set score or specific state here
+      router.push('/gameover')
+    }
+  },
+)
 </script>
