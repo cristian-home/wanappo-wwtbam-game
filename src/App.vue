@@ -29,4 +29,35 @@
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import { useEventBus } from '@vueuse/core'
+import { onBeforeUnmount } from 'vue'
+import { useSound } from '@vueuse/sound'
+import bgMusic from './assets/sounds/background.mp3'
+
+const bus = useEventBus<string>('sounds')
+
+const bgAudio = useSound(bgMusic, {
+  autoplay: false,
+  loop: true,
+})
+
+function listener(event: string) {
+  console.log(`sounds: ${event}`)
+
+  if (event === 'playBackground') {
+    if (!bgAudio.isPlaying.value) {
+      bgAudio.play()
+    }
+  } else if (event === 'stopGameOver') {
+    // bgAudio.stop()
+  } else if (event === 'stopGamePlay') {
+    // bgAudio.stop()
+  }
+}
+
+const unsubscribe = bus.on(listener)
+
+onBeforeUnmount(() => {
+  unsubscribe()
+})
 </script>

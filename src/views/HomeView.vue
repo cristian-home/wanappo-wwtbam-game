@@ -1,16 +1,29 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router'
 import GameLogo from '../components/GameLogo.vue'
+import { useEventBus } from '@vueuse/core'
+
+const bus = useEventBus<string>('sounds')
+
+const router = useRouter()
+
+const playNewGame = () => {
+  bus.emit('playBackground')
+  bus.emit('stopGameOver')
+  bus.emit('stopGamePlay')
+
+  router.push({ name: 'gameplay' })
+}
 </script>
 
 <template>
   <main class="w-full flex-grow flex flex-col items-center justify-center">
     <GameLogo class="w-80 h-80" />
-    <RouterLink
-      to="/game"
-      class="inline-block px-4 border-l border-gray-600 text-yellow-400 hover:text-yellow-300"
+    <button
+      class="cursor-pointer inline-block px-4 border-l border-gray-600 text-yellow-400 hover:text-yellow-300"
+      @click="playNewGame"
     >
       {{ $t('playGame') }}
-    </RouterLink>
+    </button>
   </main>
 </template>
