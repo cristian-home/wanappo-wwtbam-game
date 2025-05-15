@@ -6,6 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import nightwatchPlugin from 'vite-plugin-nightwatch'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { compression } from 'vite-plugin-compression2'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,6 +17,12 @@ export default defineConfig({
     tailwindcss(),
     nightwatchPlugin(),
     VitePWA({ registerType: 'autoUpdate' }),
+    compression({ algorithm: 'deflate' }),
+    compression({ algorithm: 'gzip' }),
+    compression({
+      algorithm: 'brotliCompress',
+      deleteOriginalAssets: false,
+    }),
   ],
   resolve: {
     alias: {
