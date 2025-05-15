@@ -36,6 +36,12 @@ const messages = {
     lifelineUsageReminder:
       'Remember: used lifelines remain unavailable for all subsequent questions.',
     points: 'Points',
+    // Update notification translations
+    newVersionAvailable: 'New Version Available',
+    updateNotificationText:
+      'A new version of this app is available. Update now for the latest features and improvements.',
+    updateNow: 'Update Now',
+    later: 'Later',
   },
   es: {
     greeting: '¡Hola!',
@@ -71,6 +77,12 @@ const messages = {
     lifelineUsageReminder:
       'Recuerda: los comodines usados permanecerán no disponibles para todas las siguientes preguntas.',
     points: 'Puntos',
+    // Update notification translations
+    newVersionAvailable: 'Nueva Versión Disponible',
+    updateNotificationText:
+      'Hay una nueva versión disponible. Actualiza ahora para las últimas funciones y mejoras.',
+    updateNow: 'Actualizar Ahora',
+    later: 'Más tarde',
   },
 }
 
