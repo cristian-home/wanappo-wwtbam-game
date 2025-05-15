@@ -12,6 +12,7 @@ import { useGameStore } from '../stores/GameStore'
 import { useTimerStore } from '../stores/TimerStore'
 import QlementineIconsNew16 from '~icons/qlementine-icons/new-16'
 import { useMotion } from '@vueuse/motion'
+import { useConfirmDialog } from '@vueuse/core'
 import { motions } from '@/motions'
 import { deepMerge } from '@/utils/objects'
 
@@ -22,6 +23,7 @@ const router = useRouter()
 const header = ref<HTMLElement>()
 const questionPanel = ref<HTMLElement>()
 const ladder = ref<HTMLElement>()
+const confirmDialog = ref<HTMLDialogElement>()
 
 const { leave: leaveHeader } = useMotion(header, motions.appear)
 const { leave: leavePanel } = useMotion(
@@ -30,10 +32,44 @@ const { leave: leavePanel } = useMotion(
 )
 const { leave: leaveLadder } = useMotion(ladder, motions.slideLeftIn)
 
+// Use the dialog API from Vue Use
+const { reveal, confirm } = useConfirmDialog()
+
 const startGame = () => {
   gameStore.startGame()
   if (gameStore.currentQuestion) {
     timerStore.startTimer(120) // Initial timer start for the first question
+  }
+}
+
+const openConfirmDialog = () => {
+  if (!gameStore.selectedAnswerId || gameStore.isCorrect !== null) return
+
+  // Use the dialog element's showModal method
+  reveal()
+
+  // Only show the modal if it's not already open
+  if (confirmDialog.value && !confirmDialog.value.open) {
+    confirmDialog.value.showModal()
+
+    // Make dialog non-cancelable (prevent Escape key from closing it)
+    confirmDialog.value.addEventListener('cancel', (event) => {
+      event.preventDefault()
+    })
+
+    // Prevent clicks outside from closing the dialog
+    confirmDialog.value.addEventListener('click', (event) => {
+      if (event.target === confirmDialog.value) {
+        event.preventDefault()
+      }
+    })
+  }
+}
+
+// Function to close the dialog manually
+const closeConfirmDialog = () => {
+  if (confirmDialog.value && confirmDialog.value.open) {
+    confirmDialog.value.close()
   }
 }
 
@@ -63,6 +99,10 @@ const confirmAndProceed = async () => {
   }
 }
 
+const handleConfirm = async () => {
+  await confirmAndProceed()
+}
+
 const resetAndStartGame = () => {
   timerStore.resetTimer()
   gameStore.resetGame()
@@ -70,6 +110,11 @@ const resetAndStartGame = () => {
 }
 
 onMounted(() => {
+  // Ensure the dialog is closed when the component is mounted
+  if (confirmDialog.value && confirmDialog.value.open) {
+    confirmDialog.value.close()
+  }
+
   if (gameStore.gameStatus !== 'playing' || !gameStore.currentQuestion) {
     startGame()
   }
@@ -85,6 +130,16 @@ watch(
     } else if (newStatus === 'finished') {
       timerStore.stopTimer()
       // Optional: Display a success message or navigate
+    }
+  },
+)
+
+// Watch for answer selection to automatically open confirmation dialog
+watch(
+  () => gameStore.selectedAnswerId,
+  (newAnswerId) => {
+    if (newAnswerId && gameStore.isCorrect === null && gameStore.gameStatus === 'playing') {
+      openConfirmDialog()
     }
   },
 )
@@ -131,13 +186,6 @@ onBeforeRouteLeave((to, from, next) => {
     <div class="QuestionPanel" ref="questionPanel">
       <QuestionDisplay />
       <AnswerButtons />
-      <button
-        @click="confirmAndProceed"
-        :disabled="!gameStore.selectedAnswerId || gameStore.isCorrect !== null"
-        class="py-2.5 px-5 text-base bg-cyan-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
-      >
-        {{ $t('confirmAnswer') }}
-      </button>
       <div
         v-if="gameStore.gameStatus === 'gameOver'"
         class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
@@ -184,6 +232,38 @@ onBeforeRouteLeave((to, from, next) => {
         </button>
       </div>
     </div>
+
+    <!-- Confirmation Dialog using HTML dialog element -->
+    <dialog
+      class="confirmation-dialog bg-black bg-opacity-90 text-white p-6 rounded-lg border-2 border-cyan-500 shadow-2xl backdrop:bg-black backdrop:bg-opacity-50"
+      ref="confirmDialog"
+      v-show="gameStore.selectedAnswerId !== null && gameStore.isCorrect === null"
+    >
+      <div class="flex flex-col gap-4">
+        <h2 class="text-xl font-bold text-center">
+          {{ $t('confirmYourAnswer') || 'Confirm Your Answer' }}
+        </h2>
+
+        <p class="text-center mb-4">
+          {{ $t('confirmSelectedAnswer') || 'Press Confirm to submit your answer' }}
+        </p>
+
+        <div class="flex justify-center">
+          <button
+            @click="
+              () => {
+                closeConfirmDialog()
+                confirm()
+                handleConfirm()
+              }
+            "
+            class="py-2 px-6 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition-colors font-bold"
+          >
+            {{ $t('confirm') || 'Confirm' }}
+          </button>
+        </div>
+      </div>
+    </dialog>
   </div>
 </template>
 <style lang="css" scoped>
@@ -221,5 +301,27 @@ onBeforeRouteLeave((to, from, next) => {
 
 .Header {
   grid-area: Header;
+}
+
+/* Dialog styling */
+.confirmation-dialog::backdrop {
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.confirmation-dialog {
+  max-width: 400px;
+  width: 90%;
+  margin: auto;
+  border: 2px solid #06b6d4; /* cyan-600 */
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 1;
+  z-index: 50;
+  position: fixed;
+  transform: translate(0%, -80%);
 }
 </style>
