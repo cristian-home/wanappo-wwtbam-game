@@ -95,7 +95,7 @@ watch(currentQuestion, () => {
       :class="getButtonClass(option.id)"
     >
       <span class="w-full h-full flex flex-col justify-center">
-        {{ option.text }} {{ option.id == currentQuestion?.correctAnswerId ? ' (Correct)' : '' }}
+        {{ option.text }}
       </span>
     </button>
   </div>

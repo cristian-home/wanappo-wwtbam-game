@@ -3,11 +3,13 @@
     class="overflow-hidden w-dvw h-dvh bg-gradient-to-br from-purple-900 via-purple-700 to-pink-700 text-gray-100 min-h-screen"
   >
     <RouterView class="w-dvw h-dvh" />
+    <UpdateNotification />
   </div>
 </template>
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import UpdateNotification from './components/UpdateNotification.vue'
 import { useEventBus } from '@vueuse/core'
 import { onBeforeUnmount } from 'vue'
 import { useSound } from '@vueuse/sound'
