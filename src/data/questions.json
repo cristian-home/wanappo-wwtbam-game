@@ -1,38 +1,93 @@
 [
   {
     "id": 1,
-    "text": "What is the capital of France?",
+    "text": "¿Son tecnologías de Lifestyle 4:",
     "options": [
-      { "id": "a", "text": "Berlin" },
-      { "id": "b", "text": "Madrid" },
-      { "id": "c", "text": "Paris" },
-      { "id": "d", "text": "Rome" }
+      { "id": "a", "text": "View Xpansion" },
+      { "id": "b", "text": "Stable View Enhance" },
+      { "id": "c", "text": "ID Freeform" },
+      { "id": "d", "text": "Tecnologia de Armonizacion Binocular" },
+      { "id": "e", "text": "Todas las anteriores" }
     ],
     "correctAnswerId": "c",
     "difficulty": 1
   },
   {
     "id": 2,
-    "text": "Which planet is known as the Red Planet?",
+    "text": "La tecnología Binocular Eye Model del lente Nulux Identity V+ tiene en cuenta la potencia y la posición delante del ojo a través de 5 parámetros:",
     "options": [
-      { "id": "a", "text": "Earth" },
-      { "id": "b", "text": "Mars" },
-      { "id": "c", "text": "Jupiter" },
-      { "id": "d", "text": "Venus" }
+      { "id": "a", "text": "Equilibrio del nivel de soporte acomodativo" },
+      { "id": "b", "text": "Estabilización de los movimientos oculares" },
+      { "id": "c", "text": "Reducción del desequilibrio de la magnificación" },
+      { "id": "d", "text": "Control de los efectos prismáticos verticales indeseados" },
+      { "id": "e", "text": "Proporcionar la máxima agudeza visual" },
+      { "id": "f", "text": "Todas las anteriores" }
     ],
-    "correctAnswerId": "b",
-    "difficulty": 1
+    "correctAnswerId": "f",
+    "difficulty": 2
   },
   {
     "id": 3,
-    "text": "What is the largest ocean on Earth?",
+    "text": "Qué AR HiVision de HOYA tiene filtro selectivo de luz azul dañina?",
     "options": [
-      { "id": "a", "text": "Atlantic Ocean" },
-      { "id": "b", "text": "Indian Ocean" },
-      { "id": "c", "text": "Arctic Ocean" },
-      { "id": "d", "text": "Pacific Ocean" }
+      { "id": "a", "text": "Aqua" },
+      { "id": "b", "text": "Super" },
+      { "id": "c", "text": "View Protect Blue" },
+      { "id": "d", "text": "Longlife" },
+      { "id": "e", "text": "Todas las anteriores " }
+    ],
+    "correctAnswerId": "c",
+    "difficulty": 3
+  },
+  {
+    "id": 4,
+    "text": "La familia completa de Sensity es:",
+    "options": [
+      { "id": "a", "text": "Sensity 2" },
+      { "id": "b", "text": "Sensity Dar" },
+      { "id": "c", "text": "Sensity Fast" },
+      { "id": "d", "text": "Todas las anteriores" }
     ],
     "correctAnswerId": "d",
-    "difficulty": 2
+    "difficulty": 4
+  },
+  {
+    "id": 5,
+    "text": "MIyosmart extra rango, ahora llega en fórmulas de esfera negativa hasta:",
+    "options": [
+      { "id": "a", "text": "-4.00" },
+      { "id": "b", "text": "-6.00" },
+      { "id": "c", "text": "-10.00" },
+      { "id": "d", "text": "-13.00" },
+      { "id": "e", "text": "+13.00" }
+    ],
+    "correctAnswerId": "e",
+    "difficulty": 5
+  },
+  {
+    "id": 6,
+    "text": "Hoya, que instrumentos está presentando en este Congreso Franja 2025:",
+    "options": [
+      { "id": "a", "text": "VisuReal Master" },
+      { "id": "b", "text": "Visureal Move" },
+      { "id": "c", "text": "Tracer GT-7000" },
+      { "id": "d", "text": "Solo a y b es correcta" },
+      { "id": "e", "text": "a, b y c son correctas" }
+    ],
+    "correctAnswerId": "e",
+    "difficulty": 6
+  },
+  {
+    "id": 7,
+    "text": "Hoya, es tecnología de que país?:",
+    "options": [
+      { "id": "a", "text": "Japón" },
+      { "id": "b", "text": "Colombia" },
+      { "id": "c", "text": "Australia" },
+      { "id": "d", "text": "Union Europea" },
+      { "id": "e", "text": "Ninguna de las anteriores" }
+    ],
+    "correctAnswerId": "a",
+    "difficulty": 7
   }
 ]
