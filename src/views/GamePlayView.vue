@@ -105,13 +105,18 @@ watch(
 )
 
 onBeforeRouteLeave((to, from, next) => {
-  Promise.all([
-    new Promise((resolve) => leaveHeader(() => resolve(true))),
-    new Promise((resolve) => leavePanel(() => resolve(true))),
-    new Promise((resolve) => leaveLadder(() => resolve(true))),
-  ]).then(() => {
-    next()
-  })
+  // If going to gameover or gameStatus is not 'playing', play the animations and continue
+  if (gameStore.gameStatus !== 'playing') {
+    Promise.all([
+      new Promise((resolve) => leaveHeader(() => resolve(true))),
+      new Promise((resolve) => leavePanel(() => resolve(true))),
+      new Promise((resolve) => leaveLadder(() => resolve(true))),
+    ]).finally(() => {
+      next()
+    })
+  } else {
+    router.push({ name: 'gameplay' })
+  }
 })
 </script>
 
