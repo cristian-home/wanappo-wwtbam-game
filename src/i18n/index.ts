@@ -26,6 +26,12 @@ const messages = {
     newGame: 'New Game',
     congratulations: 'Congratulations! You are a Millionaire!',
     youWon: 'You won:',
+    // Confirmation dialog
+    confirmYourAnswer: 'Confirm Your Answer',
+    areYouSureWithYourAnswer: 'Are you sure you want to confirm this answer?',
+    confirmSelectedAnswer: 'Press Confirm to submit your answer',
+    confirm: 'Confirm',
+    cancel: 'Cancel',
     // Lifelines
     fiftyFifty: '50:50',
     askAudience: 'Ask the Audience',
@@ -67,6 +73,12 @@ const messages = {
     newGame: 'Nuevo Juego',
     congratulations: '¡Felicidades! ¡Eres un Millonario!',
     youWon: 'Ganaste:',
+    // Confirmation dialog
+    confirmYourAnswer: 'Confirmar tu Respuesta',
+    areYouSureWithYourAnswer: '¿Estás seguro de confirmar esta respuesta?',
+    confirmSelectedAnswer: 'Presiona Confirmar para enviar tu respuesta',
+    confirm: 'Confirmar',
+    cancel: 'Cancelar',
     // Lifelines
     fiftyFifty: '50:50',
     askAudience: 'Pregunta al Público',

@@ -23,9 +23,8 @@ const currentQuestion = computed(() => gameStore.getCurrentQuestionData)
   font-weight: 500;
   text-decoration: none;
   text-align: center;
-  clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+  clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%);
   background-color: #161213;
-  cursor: pointer;
   background-image: radial-gradient(
     200% 70% at center 20%,
     rgb(44, 37, 49) -30%,
