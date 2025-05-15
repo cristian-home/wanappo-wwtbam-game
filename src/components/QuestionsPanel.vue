@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <span>{{ $t('questionPanel') }}</span>
+    <span>Useless</span>
   </div>
 </template>
 
