@@ -2,11 +2,13 @@
   <div class="p-5 flex flex-col items-center min-h-[calc(100vh-40px)] box-border">
     <div class="flex w-full max-w-6xl gap-5 md:flex-row flex-col-reverse">
       <div class="flex-grow md:w-3/4 flex flex-col">
-        <GameLogo v-if="!isMobile" />
+        <div class="flex justify-center">
+          <GameLogo class="w-32 h-32" v-if="!isMobile" />
+        </div>
         <QuestionTimer />
         <QuestionDisplay />
         <AnswerButtons />
-        <LifelinesDisplay />
+        <LifelinesDisplay class="absolute" />
         <LifelineFeedback />
 
         <div class="flex justify-around mt-5">

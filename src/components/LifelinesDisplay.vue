@@ -1,6 +1,6 @@
 <template>
   <div class="mb-5 text-center">
-    <h4 class="mt-0 mb-2.5 text-white text-lg font-semibold">{{ $t('lifelines') }}</h4>
+    <!-- <h4 class="mt-0 mb-2.5 text-white text-lg font-semibold">{{ $t('lifelines') }}</h4> -->
     <div class="flex justify-center gap-2.5">
       <button
         v-for="lifeline in lifelines"

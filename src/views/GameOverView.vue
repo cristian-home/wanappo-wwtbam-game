@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen text-center p-5 box-border">
-    <GameLogo />
+    <GameLogo class="w-48 h-48" />
     <h1 class="text-red-500 text-4xl font-bold mb-5">{{ $t('gameOver') }}</h1>
     <p v-if="finalScore !== null" class="text-xl mb-7">
       {{ $t('yourFinalScore') }} {{ finalScore.toLocaleString() }} {{ $t('points') }}
