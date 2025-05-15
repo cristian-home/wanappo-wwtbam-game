@@ -1,70 +1,3 @@
-<template>
-  <div class="p-5 flex flex-col items-center min-h-[calc(100vh-40px)] box-border">
-    <div class="flex w-full max-w-6xl gap-5 md:flex-row flex-col-reverse">
-      <div class="flex-grow md:w-3/4 flex flex-col">
-        <div class="flex justify-center">
-          <GameLogo class="w-32 h-32" v-if="!isMobile" />
-        </div>
-        <QuestionTimer />
-        <QuestionDisplay />
-        <AnswerButtons />
-        <LifelinesDisplay class="absolute" />
-        <LifelineFeedback />
-
-        <div class="flex justify-around mt-5">
-          <button
-            @click="confirmAndProceed"
-            :disabled="!gameStore.selectedAnswerId || gameStore.isCorrect !== null"
-            class="py-2.5 px-5 text-base bg-cyan-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
-          >
-            {{ $t('confirmAnswer') }}
-          </button>
-          <button
-            @click="resetAndStartGame"
-            class="py-2.5 px-5 text-base bg-teal-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-teal-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
-          >
-            {{ $t('newGame') }}
-          </button>
-        </div>
-
-        <div
-          v-if="gameStore.gameStatus === 'gameOver'"
-          class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
-        >
-          <h2 class="text-red-500 text-2xl font-bold">{{ $t('gameOver') }}</h2>
-          <p class="text-lg">
-            {{ $t('yourFinalScore') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
-          </p>
-          <RouterLink
-            to="/"
-            class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
-          >
-            {{ $t('backToHome') }}
-          </RouterLink>
-        </div>
-        <div
-          v-if="gameStore.gameStatus === 'finished'"
-          class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
-        >
-          <h2 class="text-green-500 text-2xl font-bold">{{ $t('congratulations') }}</h2>
-          <p class="text-lg">
-            {{ $t('youWon') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
-          </p>
-          <RouterLink
-            to="/"
-            class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
-          >
-            {{ $t('backToHome') }}
-          </RouterLink>
-        </div>
-      </div>
-      <div class="md:w-1/4 md:max-w-xs bg-black bg-opacity-30 p-4 rounded-lg">
-        <MoneyLadder />
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { onMounted, watch, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -159,3 +92,72 @@ watch(
   },
 )
 </script>
+
+<template>
+  <div class="p-5 flex flex-col items-center min-h-[calc(100vh-40px)] box-border">
+    <div class="flex w-full max-w-6xl gap-5 md:flex-row flex-col-reverse">
+      <div class="flex-grow md:w-3/4 flex flex-col">
+        <div class="flex justify-center">
+          <GameLogo class="w-32 h-32" v-if="!isMobile" />
+        </div>
+        <QuestionTimer />
+        <QuestionDisplay />
+        <AnswerButtons />
+        <LifelinesDisplay class="absolute" />
+        <LifelineFeedback />
+
+        <div class="flex justify-around mt-5">
+          <button
+            @click="confirmAndProceed"
+            :disabled="!gameStore.selectedAnswerId || gameStore.isCorrect !== null"
+            class="py-2.5 px-5 text-base bg-cyan-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
+          >
+            {{ $t('confirmAnswer') }}
+          </button>
+        </div>
+
+        <div
+          v-if="gameStore.gameStatus === 'gameOver'"
+          class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
+        >
+          <h2 class="text-red-500 text-2xl font-bold">{{ $t('gameOver') }}</h2>
+          <p class="text-lg">
+            {{ $t('yourFinalScore') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
+          </p>
+          <RouterLink
+            to="/"
+            class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
+          >
+            {{ $t('backToHome') }}
+          </RouterLink>
+        </div>
+        <div
+          v-if="gameStore.gameStatus === 'finished'"
+          class="mt-7 p-5 bg-black bg-opacity-70 rounded-lg text-center"
+        >
+          <h2 class="text-green-500 text-2xl font-bold">{{ $t('congratulations') }}</h2>
+          <p class="text-lg">
+            {{ $t('youWon') }} {{ gameStore.score.toLocaleString() }} {{ $t('points') }}
+          </p>
+          <RouterLink
+            to="/"
+            class="inline-block mt-4 py-2.5 px-4 bg-blue-600 text-white no-underline rounded-md hover:bg-blue-700"
+          >
+            {{ $t('backToHome') }}
+          </RouterLink>
+        </div>
+      </div>
+      <div class="md:w-1/4 md:max-w-xs bg-black bg-opacity-30 p-4 rounded-lg">
+        <MoneyLadder />
+        <div class="w-full mt-5 rounded-lg border-gray-50 flex flex-col items-center">
+          <button
+            @click="resetAndStartGame"
+            class="py-2.5 px-5 text-base bg-teal-600 text-white border-none rounded-md cursor-pointer hover:not(:disabled):bg-teal-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
+          >
+            {{ $t('newGame') }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
